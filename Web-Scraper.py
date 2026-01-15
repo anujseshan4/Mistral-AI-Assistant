@@ -1,7 +1,11 @@
-#Step 1: Load Important Libraries
 import subprocess
 import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+
+#Step 1: Load Important Libraries
 import os
+import sys
 from pathlib import Path
 import pandas as pd
 import streamlit as st
@@ -9,29 +13,51 @@ import webbrowser
 import asyncio
 import logging
 
-subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
-
-# Step 2 - Defining CSS for Streamlit App
+# Step 2.1 - Defining CSS for Streamlit App
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 
-def load_css(css_file):
-    try:
-        css_path = current_dir / "styles" / "matrix.css"
-        if css_path.exists():
-            with open(css_path) as f:
-                st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    except Exception as e:
-        print(f"CSS loading skipped: {e}")
-
 def matrix_background():
+    # This combines the HTML and the necessary CSS to make it a background
     st.markdown(
         """
-        <div class="matrix">
+        <style>
+        .matrix-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            overflow: hidden;
+            z-index: -1; /* This puts it BEHIND your buttons/text */
+            color: #0F0;
+            font-family: monospace;
+            font-size: 20px;
+            opacity: 0.3; /* Makes it subtle so you can read your app */
+        }
+        .matrix-column {
+            position: absolute;
+            top: -1000px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+        /* Make Streamlit background transparent to see the matrix */
+        .stApp {
+            background: transparent;
+        }
+        </style>
+        
+        <div class="matrix-container">
             """ +
             "".join(
-                f"<span style='left:{i*4}%; animation-duration:{5 + i%5}s; animation-delay:{-i}s;'>"
-                + "<br>".join(str((i*j) % 10) for j in range(40))
-                + "</span>"
+                f"<div class='matrix-column' style='left:{i*4}%; animation-duration:{5 + i%5}s; animation-delay:{-i}s;'>"
+                + "".join(str((i*j) % 10) for j in range(40))
+                + "</div>"
                 for i in range(25)
             ) +
         """
@@ -40,18 +66,9 @@ def matrix_background():
         unsafe_allow_html=True
     )
 
-# Load CSS if available
-load_css("styles/matrix.css")
+# Just call this at the top of your app
 matrix_background()
 
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] {
-        background-color: #000000;
-    }
-    </style>
-    """, unsafe_allow_html=True)
 
 # Step 2: Streamlit UI
 
