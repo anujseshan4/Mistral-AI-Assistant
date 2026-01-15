@@ -236,10 +236,15 @@ elif selection == "Crawl4Ai 🕷️":
         if sys.platform.startswith("win"):
             asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
         
+        config = BrowserConfig(
+        browser_type="chromium",
+        headless=True,
+        extra_args=["--no-sandbox", "--disable-dev-shm-usage"]
+
         async def crawl(url):
-            async with AsyncWebCrawler() as crawler:
+            async with AsyncWebCrawler(config=config) as crawler:
                 result = await crawler.arun(url)
-            return result.markdown
+                return result.markdow)
 
         def crawl_sync(url):
             loop = asyncio.new_event_loop()
