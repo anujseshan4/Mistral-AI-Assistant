@@ -249,8 +249,7 @@ elif selection == "Crawl4Ai 🕷️":
                 st.text_area("Result", content, height=400)
             except Exception as e:
                 st.error(f"Scraping failed: {e}")
-    except ImportError:
-        st.error("Crawl4AI is not installed. Please install it to use this feature.")
+    
 
 elif selection == "Tensorflow":
     st.subheader("Tensorflow 🌊")
