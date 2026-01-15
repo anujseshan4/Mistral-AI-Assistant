@@ -14,6 +14,13 @@ import asyncio
 import logging
 
 # Try to load dotenv, but don't fail if HOME.env doesn't exist (for Streamlit Cloud)
+
+if not os.path.exists(os.path.expanduser("~/.cache/ms-playwright")):
+    try:
+        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+    except Exception as e:
+        st.error(f"Playwright installation failed: {e}")
+
 try:
     from dotenv import load_dotenv, find_dotenv
     env_path = find_dotenv("HOME.env", raise_error_if_not_found=False)
