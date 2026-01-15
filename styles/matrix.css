@@ -1,0 +1,45 @@
+/* Full-screen matrix background */
+
+.matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Matrix falling numbers */
+.matrix span {
+    position: absolute;
+    top: -100%;
+    color: #00ff41;
+    font-family: monospace;
+    font-size: 14px;
+    white-space: pre;
+    animation: fall linear infinite;
+    opacity: 0.75;
+}
+
+/* Falling animation */
+@keyframes fall {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* Ensure Streamlit UI stays above background */
+.block-container {
+    position: relative;
+    z-index: 1;
+}
