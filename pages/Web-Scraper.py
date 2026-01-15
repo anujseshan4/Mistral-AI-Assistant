@@ -35,6 +35,7 @@ if selected_web_scraper == "FireCrawl":
     scrape_site = st.text_input("Enter URL to scrape:")
 
     if scrape_site:
+        FIRECRAWL_API_KEY = st.text_input("Enter your FireCrawl API Key: ", type="password", key="firecrawl_api_key")
         firecrawl = FireCrawl.Firecrawl(api_key=FIRECRAWL_API_KEY)
         scraped_data = firecrawl.scrape(scrape_site, formats=["markdown"])
 
