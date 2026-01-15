@@ -6,7 +6,7 @@ import os
 import webbrowser
 from dotenv import load_dotenv, find_dotenv
 import firecrawl as FireCrawl
-import Path
+from pathlib import Path
 
 # Step 2 - Defining CSS for Streamlit App
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
