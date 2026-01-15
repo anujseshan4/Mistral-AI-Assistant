@@ -1,7 +1,11 @@
-#Step 1: Load Important Libraries
 import subprocess
 import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+
+#Step 1: Load Important Libraries
 import os
+import sys
 from pathlib import Path
 import pandas as pd
 import streamlit as st
@@ -9,9 +13,7 @@ import webbrowser
 import asyncio
 import logging
 
-subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
-
-# Step 2 - Defining CSS for Streamlit App
+# Step 2.1 - Defining CSS for Streamlit App
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 
 def load_css(css_file):
