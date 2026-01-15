@@ -1,4 +1,7 @@
-pip install -r requirements.txt
+import subprocess
+import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
 #Step 1: Load Important Libraries
 import os
