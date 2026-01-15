@@ -224,50 +224,31 @@ elif selection == "FireCrawl 🔥":
             st.error(f"Error: {str(e)}")
 
 elif selection == "Crawl4Ai 🕷️":
-    try:
-        import crawl4ai
-        from crawl4ai import AsyncWebCrawler
-        
-        st.subheader("Crawl4Ai 🕷️")
-        st.markdown("### Useful Links:")
-        st.markdown("- [Crawl4AI Examples](https://docs.crawl4ai.com/core/examples/)")
-        st.markdown("- [Crawl4AI Documentation](https://docs.crawl4ai.com/)")
+    st.subheader("Crawl4AI 🕷️")
 
-        if sys.platform.startswith("win"):
-            asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-        
+    from crawl4ai import AsyncWebCrawler, BrowserConfig
+
+    # Define the async function inside the elif block
+    async def crawl(url):
         config = BrowserConfig(
-        browser_type="chromium",
-        headless=True,
-        extra_args=["--no-sandbox", "--disable-dev-shm-usage"]
+            browser_type="chromium",
+            headless=True,
+            extra_args=["--no-sandbox", "--disable-dev-shm-usage"]
+        )
+        async with AsyncWebCrawler(config=config) as crawler:
+            result = await crawler.arun(url)
+            return result.markdown
 
-        async def crawl(url):
-            async with AsyncWebCrawler(config=config) as crawler:
-                result = await crawler.arun(url)
-                return result.markdow)
-
-        def crawl_sync(url):
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            return loop.run_until_complete(crawl(url))
-
-        url = st.text_input("Enter URL to scrape", key="crawl4ai_url")
-
-        if st.button("Scrape with Crawl4AI", key="crawl4ai_scrape_btn"):
-            with st.spinner("Scraping website..."):
-                try:
-                    content = crawl_sync(url)
-                    st.text_area("Scraped Content", content, height=400, key="crawl4ai_content")
-
-                    st.download_button(
-                        "Download Markdown",
-                        content,
-                        file_name="crawl4ai_output.md",
-                        mime="text/markdown",
-                        key="download_crawl4ai"
-                    )
-                except Exception as e:
-                    st.error(f"Scraping failed: {e}")
+    # Logic to run the async function
+    url = st.text_input("Enter URL to scrape", key="crawl4ai_url")
+    if st.button("Scrape with Crawl4AI"):
+        with st.spinner("Scraping..."):
+            try:
+                # Use asyncio to run the async function
+                content = asyncio.run(crawl(url))
+                st.text_area("Result", content, height=400)
+            except Exception as e:
+                st.error(f"Scraping failed: {e}")
     except ImportError:
         st.error("Crawl4AI is not installed. Please install it to use this feature.")
 
