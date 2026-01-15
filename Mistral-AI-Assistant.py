@@ -1,3 +1,5 @@
+%pip install -r requirements.txt
+
 #Step 1: Load Important Libraries
 import os
 import sys
