@@ -7,13 +7,8 @@ import webbrowser
 from dotenv import load_dotenv, find_dotenv
 import firecrawl as FireCrawl
 
-# Step 2: Load environment variables
-env_path = find_dotenv("HOME.env", raise_error_if_not_found=True)
-load_dotenv(env_path, override=True)
+# Step 2: Streamlit UI
 
-FIRECRAWL_API_KEY = os.getenv("FIRECRAWL_API_KEY")
-
-# Step 3: Streamlit UI
 st.title("Web Scraping 🕷️🔥")
 st.write("---")
 
