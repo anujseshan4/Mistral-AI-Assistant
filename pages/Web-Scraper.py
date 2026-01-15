@@ -6,6 +6,49 @@ import os
 import webbrowser
 from dotenv import load_dotenv, find_dotenv
 import firecrawl as FireCrawl
+import Path
+
+# Step 2 - Defining CSS for Streamlit App
+current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+
+def load_css(css_file):
+    try:
+        css_path = current_dir / "styles" / "matrix.css"
+        if css_path.exists():
+            with open(css_path) as f:
+                st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    except Exception as e:
+        print(f"CSS loading skipped: {e}")
+
+def matrix_background():
+    st.markdown(
+        """
+        <div class="matrix">
+            """ +
+            "".join(
+                f"<span style='left:{i*4}%; animation-duration:{5 + i%5}s; animation-delay:{-i}s;'>"
+                + "<br>".join(str((i*j) % 10) for j in range(40))
+                + "</span>"
+                for i in range(25)
+            ) +
+        """
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Load CSS if available
+load_css("styles/matrix.css")
+matrix_background()
+
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        background-color: #000000;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Step 2: Streamlit UI
 
