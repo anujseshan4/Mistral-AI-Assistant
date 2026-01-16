@@ -252,8 +252,8 @@ elif selection == "Crawl4Ai 🕷️":
                 st.text_area("Result", content, height=400)
             except Exception as e:
                 st.error(f"Scraping failed: {e}")
-                
-    if 'crawl4ai_content' in st.session_state and st.session_state['crawl4ai_content']:
+
+    if 'crawl4ai_content' in st.session_state:
         col1, col2 = st.columns(2)
         
         with col1:
