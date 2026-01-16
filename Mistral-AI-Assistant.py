@@ -251,27 +251,7 @@ elif selection == "Crawl4Ai 🕷️":
                 content = asyncio.run(crawl(url))
                 st.text_area("Result", content, height=400)
             except Exception as e:
-                st.error(f"Scraping failed: {e}")
-    
-    col1, col2 = st.columns(2) 
-    with col1:
-        st.download_button(
-                label="📥 Download as Text",
-                data=st.session_state['crawl4ai_content'],
-                file_name="crawl4ai_scraped_data.txt",
-                mime="text/plain",
-                key="download_crawl4ai_txt"
-            )
-        
-    with col2:
-        st.download_button(
-                label="📥 Download as Markdown",
-                data=st.session_state['crawl4ai_content'],
-                file_name="crawl4ai_scraped_data.md",
-                mime="text/markdown",
-                key="download_crawl4ai_md"
-            )
-    
+                st.error(f"Scraping failed: {e}")    
 
 elif selection == "Tensorflow":
     st.subheader("Tensorflow 🌊")
