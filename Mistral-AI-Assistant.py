@@ -17,6 +17,9 @@ import logging
 
 if not os.path.exists(os.path.expanduser("~/.cache/ms-playwright")):
     try:
+        # Install system dependencies first
+        subprocess.run([sys.executable, "-m", "playwright", "install-deps", "chromium"], check=True)
+        # Then install chromium
         subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
     except Exception as e:
         st.error(f"Playwright installation failed: {e}")
